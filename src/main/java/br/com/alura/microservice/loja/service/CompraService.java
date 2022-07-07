@@ -12,17 +12,14 @@ import br.com.alura.microservice.loja.controller.dto.InfoFornecedorDTO;
 @Service
 public class CompraService {
 	
-	@Autowired
-	private RestTemplate client;
-
 	public void realizaCompra(CompraDTO compra) {
 		
-		ResponseEntity<InfoFornecedorDTO> exchange = 
-			client.exchange("http://fornecedor/info/" + compra.getEndereco().getEstado(),
-			HttpMethod.GET, null, InfoFornecedorDTO.class);
+		RestTemplate client = new RestTemplate();
+		ResponseEntity<InfoFornecedorDTO> exchange =
+				client.exchange("http://localhost:8081/info/GO" + compra.getEndereco().getEstado(),
+				HttpMethod.GET, null, InfoFornecedorDTO.class);
 		
 		System.out.println(exchange.getBody().getEndereco());
-		
 	}
 
 }
